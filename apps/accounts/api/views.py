@@ -1,33 +1,31 @@
-from rest_framework import status
+from rest_framework import generics
 from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework import status
+
 from .serializers import SignupSerializer
 
 
-class SignupAPIView(APIView):
-    def post(self, request):
-        serializer = SignupSerializer(data=request.data)
+class SignupAPIView(generics.CreateAPIView):
 
-        if serializer.is_valid():
-            user = serializer.save()
+    serializer_class = SignupSerializer
 
-            return Response(
-                {
-                    "success": True,
-                    "message": "Account created successfully.",
-                    "data": {
-                        "id": user.id,
-                        "name": user.name,
-                        "email": user.email,
-                    },
-                },
-                status=status.HTTP_201_CREATED,
-            )
+    def create(self, request, *args, **kwargs):
+
+        serializer = self.get_serializer(data=request.data)
+
+        serializer.is_valid(raise_exception=True)
+
+        user = serializer.save()
 
         return Response(
             {
-                "success": False,
-                "errors": serializer.errors,
+                "success": True,
+                "message": "User registered successfully.",
+                "data": {
+                    "id": user.id,
+                    "username": user.username,
+                    "email": user.email,
+                },
             },
-            status=status.HTTP_400_BAD_REQUEST,
+            status=status.HTTP_201_CREATED,
         )
