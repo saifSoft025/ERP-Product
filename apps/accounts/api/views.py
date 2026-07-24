@@ -1,17 +1,19 @@
-from rest_framework import generics
-from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
-from .serializers import SignupSerializer
+from .serializers import RegisterSerializer
 
 
-class SignupAPIView(generics.CreateAPIView):
+class RegisterAPIView(APIView):
 
-    serializer_class = SignupSerializer
+    permission_classes = []
 
-    def create(self, request, *args, **kwargs):
+    authentication_classes = []
 
-        serializer = self.get_serializer(data=request.data)
+    def post(self, request):
+
+        serializer = RegisterSerializer(data=request.data)
 
         serializer.is_valid(raise_exception=True)
 
@@ -20,11 +22,13 @@ class SignupAPIView(generics.CreateAPIView):
         return Response(
             {
                 "success": True,
-                "message": "User registered successfully.",
+                "message": "Account created successfully.",
                 "data": {
                     "id": user.id,
-                    "username": user.username,
                     "email": user.email,
+                    "username": user.username,
+                    "first_name": user.first_name,
+                    "last_name": user.last_name,
                 },
             },
             status=status.HTTP_201_CREATED,
