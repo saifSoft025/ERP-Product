@@ -1,6 +1,7 @@
 from rest_framework.response import Response
 
 
+#  class method
 class ApiResponse:
 
     @staticmethod
