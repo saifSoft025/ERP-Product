@@ -33,6 +33,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             )
 
         return value
+    #  validate_username and validate_password methods are used to validate the username and password fields respectively.
 
     def validate_username(self, value):
 
