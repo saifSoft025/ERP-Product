@@ -1,6 +1,7 @@
 from django.contrib.auth.base_user import BaseUserManager
 
 
+#  function to create a user and superuser
 class UserManager(BaseUserManager):
 
     def create_user(self, email, username, password=None, **extra_fields):
