@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 
 class PasswordValidator:
 
-#  func 
+#  func  add validation
     @staticmethod
     def validate(password):
 
